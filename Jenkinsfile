@@ -20,7 +20,7 @@ pipeline {
     stage('test') {
       steps {
         sh '''
-        npx playwright test tests/insights/login-test.spec.js
+        npx playwright test
         '''
       }
       post {
