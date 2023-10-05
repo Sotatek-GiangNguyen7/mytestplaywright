@@ -1,33 +1,23 @@
 pipeline {
-  agent any
-  tools {
-    nodejs "20.8.0"
+  agent { 
+    docker { 
+      image 'mcr.microsoft.com/playwright:v1.17.2-focal'
+    } 
   }
   stages {
     stage('install playwright') {
       steps {
         sh '''
-          npm i 
+          npm i -D @playwright/test
           npx playwright install
         '''
-      }
-    }
-    stage('help') {
-      steps {
-        sh 'npx playwright test --help'
       }
     }
     stage('test') {
       steps {
         sh '''
-        npx playwright test --no-deps
+          npx playwright test jenkins-homepage.spec.ts
         '''
-      }
-      post {
-        success {
-          archiveArtifacts(artifacts: 'homepage-*.png', followSymlinks: false)
-          sh 'rm -rf *.png'
-        }
       }
     }
   }
