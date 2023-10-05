@@ -9,7 +9,6 @@ pipeline {
         sh '''
           npm i 
           npx playwright install
-          npx playwright install-deps
         '''
       }
     }
